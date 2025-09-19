@@ -1,0 +1,31 @@
+managed;
+strict ( 2 );
+
+define behavior for ZI_PL_FLIGHT_001003 alias Flight
+  implementation in class zbp_i_pl_flight_001003 unique
+persistent table ZPL_AFLIG_001001
+
+authorization master( none )
+etag master LastChangedAt
+lock master
+{
+
+  association _Booking;
+
+  action bookFlight result [0..1] $self;
+}
+
+define behavior for ZI_PL_BOOK_001001 alias Booking
+implementation in class ZBP_I_PL_Booking_001001 unique
+persistent table ZPL_ABOOK_001001
+etag master LocalLastChangedAt
+lock dependent by _Flight
+authorization dependent by _Flight
+
+{
+  field ( readonly )
+  BookingUuid, CarrierId, ConnectionId, FlightUuid, BookingDate, StartDate;
+
+  association _Flight;
+
+}

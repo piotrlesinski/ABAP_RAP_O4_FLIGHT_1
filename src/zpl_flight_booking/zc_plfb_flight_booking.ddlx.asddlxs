@@ -1,0 +1,306 @@
+@Metadata.layer: #CORE
+
+@UI: {
+  headerInfo: {
+    typeName: 'Flight Booking',
+    typeNamePlural: 'Flight Booking',
+    title: { type: #STANDARD, value: 'FlightConnectionId' }
+  },
+  presentationVariant: [{
+    sortOrder: [{ by: 'FlightDate', direction: #ASC }],
+    visualizations: [{ type: #AS_LINEITEM }]
+    //qualifier: 'Default'
+  }]
+
+}
+
+//@UI.selectionPresentationVariant: [{
+//  selectionVariant: { qualifier: 'Default' },
+//  presentationVariant: { qualifier: 'Default' }
+//}]
+//
+//@UI.selectionVariant: [{
+//    chart and table
+//    qualifier: 'Default',
+//    text     : 'Default'
+//}]
+
+annotate entity ZC_PLFB_FLIGHT_BOOKING with
+{
+  @UI.facet: [
+    {
+      purpose: #HEADER,
+      position: 10,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'CarierData'
+    },{
+      purpose: #HEADER,
+      position: 20,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'ConnIdData'
+    },{
+      purpose: #HEADER,
+      position: 30,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'PlaneData'
+    },
+  //      id: 'SoHdr',
+  //      purpose: #STANDARD,
+  //      position: 10,
+  //      label: 'Header Details',
+  //      type: #IDENTIFICATION_REFERENCE  //standatd object page details without groupind
+  //    }, {
+  //~~~~~~ object page sections ~~~~~~
+     {
+      id: 'FlightDetails',
+      type: #COLLECTION,
+      label: 'Flight Details',
+      position: 10
+    },{
+      id: 'FlyBacks',
+      type: #LINEITEM_REFERENCE,
+      purpose: #STANDARD,
+      label: 'Proposed Fly-back Flights',
+      targetElement: '_FlyBack',
+      position: 20
+//    },{
+//      id: 'FlightBackDetails',
+//      type: #COLLECTION,
+//      label: 'Fly-Back Details',
+//      position: 30
+//    },{
+//      id: 'FlightBackDetails',
+//      type: #LINEITEM_REFERENCE,
+//      purpose: #STANDARD,
+//      label: 'Fly-To list',
+//      targetElement: '_FlightsBack',
+//      position: 40
+//    },{
+//      id: 'FlightToDetails',
+//      type: #LINEITEM_REFERENCE,
+//      purpose: #STANDARD,
+//      label: 'Fly-Back list',
+//      targetElement: '_FlightsTo',
+//      position: 50
+//    },{
+//      id: 'FlightByDateDetails',
+//      type: #LINEITEM_REFERENCE,
+//      purpose: #STANDARD,
+//      label: 'Fly by dates',
+//      targetElement: '_FlightsByDate',
+//      position: 60
+    },
+  //~~~~~~
+    {
+      id: 'DetailsInfo',
+      type: #FIELDGROUP_REFERENCE,
+      parentId: 'FlightDetails',
+      label: 'Flight Details',
+      targetQualifier: 'DetailsInfo',
+      position: 10
+    },{
+      id: 'DetailsFrom',
+      type: #FIELDGROUP_REFERENCE,
+      parentId: 'FlightDetails',
+      label: 'From',
+      targetQualifier: 'DetailsFrom',
+      position: 20
+     },{
+      id: 'DetailsTo',
+      type: #FIELDGROUP_REFERENCE,
+      parentId: 'FlightDetails',
+      label: 'To',
+      targetQualifier: 'DetailsTo',
+      position: 30
+    },{
+  //      id: 'GeneralInfo',
+  //      type: #FIELDGROUP_REFERENCE,
+  //      parentId: 'FlightDetails',
+  //      label: 'Carier Information',
+  //      targetQualifier: 'GeneralInfo'
+  //    },{
+      id: 'StatusInfo',
+      type: #FIELDGROUP_REFERENCE,
+      parentId: 'FlightDetails',
+      label: 'Availability Status',
+      targetQualifier: 'StatusInfo',
+      position: 40
+    }
+  ]
+
+
+
+  @UI: {
+    lineItem: [{ position: 60, label: 'Carrier' }],
+    selectionField: [{ position: 10 }]
+    //identification: [{ position: 10 }],
+    //fieldGroup: [{ qualifier: 'GeneralInfo', position: 10 }],
+    //dataPoint: { qualifier: 'CarierData', title: 'Carier' }
+  }
+  @EndUserText: {
+    label: 'Carrier',
+    quickInfo: 'Carrier'
+  }
+  CarrierFlightId;
+
+  @UI: {
+    //lineItem: [{ position: 10, label: 'Connection ID' }],
+    lineItem: [{ position: 100, label: 'Create Booking', type: #FOR_ACTION, dataAction: 'createBooking', importance: #HIGH }],
+    //lineItem: [{  qualifier: 'Main', position: 10, label: 'Connection ID' }],
+    identification: [{ position: 10, label: 'Connection ID' }]
+    //fieldGroup: [{ qualifier: 'GeneralInfo', position: 20 }]
+    //dataPoint: { qualifier: 'ConnIdData', title: 'Create Booking' }
+    //lineItem: [ { qualifier: 'Main', qualifier: 'multiSelect' } ]
+  }
+  @EndUserText: {
+    label: 'Connection ID',
+    quickInfo: 'Connection ID'
+  }
+  FlightConnectionId;
+
+  @UI: {
+    //lineItem: [{ position: 20, label: 'Date', type: #FOR_ACTION, dataAction: 'showFlightDate' }],
+    //lineItem: [{ position: 20, label: 'Date', semanticObjectAction: 'display', type:#FOR_ACTION, dataAction: 'showFlightDate' }],
+    //lineItem: [{ position: 20, label: 'Date', targetElement: '_FlightsByDate' }],
+    lineItem: [{ position: 20, label: 'Date', type: #WITH_NAVIGATION_PATH, targetElement: '_FlightsByDate'}],
+    selectionField: [{ position: 20 }],
+    identification: [{ position: 40, criticality: 'StatusCriticality' }],
+    //fieldGroup: [{ qualifier: 'DetailsInfo', position: 40, criticality: 'StatusCriticality' }]
+    fieldGroup: [{ qualifier: 'DetailsInfo', position: 40 }]
+  }
+  @EndUserText: {
+    label: 'Flight Date',
+    quickInfo: 'Flight Date with availability status'
+  }
+  @Consumption.filter: {
+    selectionType: #INTERVAL,
+    multipleSelections: false
+  }
+  FlightDate;
+
+
+  @UI: {
+    //lineItem: [{ position: 30, label: 'Outbound airport', type: #FOR_ACTION, dataAction: 'showFlightFrom' }],
+    //lineItem: [{ position: 30, label: 'Outbound airport' }],
+    lineItem: [{ position: 30, label: 'Outbound airport', type: #WITH_NAVIGATION_PATH, targetElement: '_FlightsBack' }],
+    selectionField: [{ position: 30 }],
+    identification: [{ position: 10 }],
+    fieldGroup: [{ qualifier: 'DetailsFrom', position: 10 }]
+  }
+  @EndUserText: {
+    label: 'Flight from',
+    quickInfo: 'Outbound airport'
+  }
+  AirportFromId;
+  @UI: { fieldGroup: [{ qualifier: 'DetailsFrom', position: 30 }] }
+  AirportFromCity;
+  //@UI: { fieldGroup: [{ qualifier: 'DetailsFrom', position: 40 }] }
+  //AirportFromCountry;
+
+  @UI: {
+    //lineItem: [{ position: 40, label: 'Inbound airport', type: #FOR_ACTION, dataAction: 'showFlightTo' }],
+    //lineItem: [{ position: 40, label: 'Inbound airport' }],
+    lineItem: [{ position: 30, label: 'Inbound airport', type: #WITH_NAVIGATION_PATH, targetElement: '_FlightsTo' }],
+    selectionField: [{ position: 40 }],
+    identification: [{ position: 10 }],
+    fieldGroup: [{ qualifier: 'DetailsTo', position: 10 }]
+  }
+  @EndUserText: {
+    label: 'Flight to',
+    quickInfo: 'Inbound airport'
+  }
+  AirportToId;
+  @UI: { fieldGroup: [{ qualifier: 'DetailsTo', position: 30 }] }
+  AirportToCity;
+  //@UI: { fieldGroup: [{ qualifier: 'DetailsTo', position: 40 }] }
+  //AirportToCountry;
+
+  @UI: {
+    lineItem: [{ position: 50, label: 'Price' }],
+    identification: [{ position: 40 }],
+    fieldGroup: [{ qualifier: 'DetailsInfo', position: 50 }]
+  }
+  @EndUserText: {
+    label: 'Price',
+    quickInfo: 'Price'
+  }
+  Price;
+
+  @UI: {
+    lineItem: [{ position: 70, label: 'Available Seats', importance: #HIGH, criticality: 'StatusCriticality' }]
+    //dataPoint: { title: 'Available Seats', criticality: 'StatusCriticality', targetValue: 100, visualization: #PROGRESS }
+  }
+  @EndUserText: {
+    label: 'Available Seats',
+    quickInfo: 'Available Seats'
+  }
+  AvaiableSeats;
+
+  @UI: {
+    lineItem: [{
+      position: 80,
+      importance: #HIGH,
+      type: #AS_DATAPOINT,
+      criticality: 'StatusCriticality'
+    }],
+    identification: [{
+      position: 80,
+      criticality: 'StatusCriticality'
+    }],
+    fieldGroup: [{
+      qualifier: 'StatusInfo',
+      position: 20,
+      criticality: 'StatusCriticality'
+    }],
+    dataPoint: {
+      title: 'Occupancy Rate',
+      criticality: 'StatusCriticality',
+      targetValue: 100,
+      visualization: #PROGRESS
+    }
+  }
+  @EndUserText.label: 'Occupancy %'
+  PercentageOfOccupiedSeats;
+
+  @UI.hidden: true
+  StatusCriticality;
+
+  @UI: {
+    selectionField: [{ position: 50 }]
+  }
+  @EndUserText: {
+    label: 'Fully Booked',
+    quickInfo: 'Fully Booked'
+  }
+  FullyBooked;
+  @UI: {
+    //identification: [{ position: 20 }],
+    fieldGroup: [{ qualifier: 'DetailsFrom', position: 20 }]
+  }
+  DepartureTime;
+  @UI: {
+    //lineItem: [{ position: 100 }],
+    //identification: [{ position: 20 }],
+    fieldGroup: [{ qualifier: 'DetailsTo', position: 20 }]
+  }
+  ArrivalTime;
+  @UI: {
+    //lineItem: [{ position: 110 }],
+    //identification: [{ position: 20 }],
+    fieldGroup: [{ qualifier: 'DetailsInfo', position: 40 }]
+  }
+  @EndUserText: { label: 'Distance' }
+  DistanceUnit;
+  @UI: {
+    identification: [{ position: 30 }],
+    //fieldGroup: [{ qualifier: 'GeneralInfo', position: 30 }]
+    dataPoint: { qualifier: 'PlaneData', title: 'Plane Type' }
+  }
+  PlaneTypeId;
+  //@UI.lineItem: [{ position: 20, label: 'Proposed Fly-back Flights' }]
+  //_FlyBack;
+  @UI.lineItem: [
+    { position: 110, type: #WITH_NAVIGATION_PATH, targetElement: '_FlightsBack', label: 'Return Flights' }
+  ]
+  _FlightsBack;
+}

@@ -1,0 +1,40 @@
+managed implementation in class ZPL_FLIGHT_BOOKING unique;
+//managed;
+strict ( 2 );
+//with draft;
+define behavior for ZI_PLFB_FLIGHT_BOOKING alias Flight
+//implementation in class ZPL_FLIGHT_BOOKING unique
+persistent table ZPL_AFLBOOKING
+//draft table ZPL_DFLBOOKING
+lock master
+authorization master ( instance )
+//etag master FlightConnectionId
+//lock master total etag FlightConnectionId
+//authorization master( global )
+//
+{
+//  //create ( authorization : global );
+//  //update;
+//  //delete;
+field ( readonly ) CarrierFlightId, FlightConnectionId, FlightDate;
+action createCustomBooking result [1] $self;
+//action createBooking multiple;
+//
+    mapping for ZPL_AFLBOOKING
+    {
+        FlightConnectionId = connection_id;
+        CarrierFlightId = carrier_id;
+        FlightDate = begin_date;
+        //FlightDate = end_date;
+        Price =price;
+        CurrencyCode = currency_code;
+        //OverallStatus = overall_status;
+
+        //CreatedBy = created_by;
+        //CreatedAt = created_at;
+        //LastChangedBy = last_changed_by;
+        //LastChangedAt = last_changed_at;
+
+    }
+
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Definition ZC_PL_FLIGHT_001001'
+define service ZPL_UI_FLIGHT_001001 {
+  expose ZC_PL_FLIGHT_001002  as FlightService;
+  expose ZC_PL_FLYBACK_001001 as FlybackService;
+  expose ZC_PL_BOOK_001002    as BookingService;
+}

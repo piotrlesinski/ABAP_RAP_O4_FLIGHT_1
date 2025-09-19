@@ -1,0 +1,52 @@
+@Metadata.layer: #CORE
+
+@UI.presentationVariant: [{
+    sortOrder: [
+      { by: 'FlightDate', direction: #ASC },
+      { by: 'DepartureTime', direction: #ASC }
+    ],
+    visualizations: [{ type: #AS_LINEITEM }]
+  }]
+
+annotate entity ZC_PL_FLYBACK_001001
+    with 
+{
+     @UI: { lineItem:  [{ position: 30 }] }
+  FlightDate;
+
+  @UI: {
+      lineItem:     [{ position: 10, label: 'Aiport From' }]
+      //identification: [{ position: 10 }]
+    }
+  ConnAirportFromId;
+
+  @UI: {
+      lineItem:     [{ position: 20 }]
+      //identification: [{ position: 20 }]
+    }
+  ConnAirportToId;
+
+  @UI: {
+     lineItem:      [{ position: 40, label: 'Departure' }]
+     //identification: [{ position: 40 }]
+   }
+  DepartureTime;
+  @UI: {
+      lineItem:     [{ position: 50, label: 'Arrival' }]
+      //identification: [{ position: 50 }]
+    }
+  ArrivalTime;
+
+  @UI.lineItem:     [{ position: 60, label: 'Price' }]
+  FlightPrice;
+
+  @UI.lineItem:     [{ position: 70, label: 'Available Seats' }]
+  AvaiableSeats;
+
+  @UI: {
+      lineItem: [{ position: 80, type: #AS_DATAPOINT, criticality: 'StatusCriticality', label: 'Occupancy %' }],
+      dataPoint: { title: 'Occupancy %', criticality: 'StatusCriticality', targetValue: 100, visualization: #PROGRESS }
+    }
+  PercentageOfOccupiedSeats;
+    
+}

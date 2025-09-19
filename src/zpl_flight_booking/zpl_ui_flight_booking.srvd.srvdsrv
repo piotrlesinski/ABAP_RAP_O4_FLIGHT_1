@@ -1,0 +1,10 @@
+@ObjectModel.leadingEntity.name: 'ZC_PLFB_FLIGHT_BOOKING'
+@EndUserText.label: 'Service definition for Flight Booking'
+define service ZPL_UI_FLIGHT_BOOKING {
+  expose ZC_PLFB_FLIGHT_BOOKING  as Flight;
+  expose ZI_PLFB_FLYBACK         as FlyBack;
+  expose ZC_PLFB_FLYBACK_DETAIL  as FlyBackDet;
+  expose ZC_PLFB_FLIGHTS_BY_DATE as FlyByDate;
+  expose ZC_PLFB_FLIGHTS_TO      as FlightTo;
+  expose ZC_PL_BOOKING           as Booking;
+}

@@ -1,0 +1,110 @@
+@Metadata.layer: #CORE
+
+@UI.headerInfo: {
+  typeName: 'Fly-back Flight',
+  typeNamePlural: 'Fly-back Flights',
+  title: { type: #STANDARD, value: 'FlightDate' }
+}
+
+
+//@UI.selectionVariant: [
+//  {
+//    qualifier: 'ReturnFlights',
+//    parameters: [
+//      { name: 'AirportFromId', value: '$$AirportToId$$' },
+//      { name: 'AirportToId',   value: '$$AirportFromId$$' },
+//      { name: 'FlightDate',    value: '$$FlightDate$$' }
+//    ]
+//  }
+//]
+
+
+annotate entity ZC_PLFB_FLYBACK_DETAIL with
+{
+
+
+
+  @UI.facet: [
+    {
+      id: 'FlightDetails',
+      type: #COLLECTION,
+      //label: 'Flight Details',
+      position: 10
+    },{
+
+      id: 'FlyBackFlight',
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Fly-back Flight Details',
+      targetQualifier: 'FlyBackGroup',
+      position: 20
+    },
+    {
+      id: 'OutboundFlight',
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Original Outbound Flight',
+      targetQualifier: 'OutboundGroup',
+      position: 30
+    }
+  ]
+//@UI: {
+//    lineItem: [{ position: 10, label: 'Connection ID' }],
+//    identification: [{ position: 10 }],
+//    fieldGroup: [{ qualifier: 'OutboundGroup', position: 10 }]
+//  }
+// // === Outbound fields group ===
+//  //@UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 10 }]
+//  OutboundFlightDate;
+//
+//  @UI: {
+//    lineItem: [{ position: 20, label: 'Connection ID' }],
+//    facet: [ { id: 'Positions', type: #IDENTIFICATION_REFERENCE, label: 'Positions', position: 10 } ],
+//    identification: [{ position: 20 }],
+//    fieldGroup: [{ qualifier: 'OutboundGroup', position: 20 }]
+//  }
+//  //@UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 20 }]
+//  OutboundAirportFromId;
+//
+//  @UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 30 }]
+//  OutboundAirportToId;
+//
+//  @UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 40 }]
+//  OutboundDepartureTime;
+//
+//  @UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 50 }]
+//  OutboundArrivalTime;
+//
+//  @UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 60 }]
+//  OutboundPrice;
+//
+//  @UI.fieldGroup: [{ qualifier: 'OutboundGroup', position: 70 }]
+//  OutboundOccupancy;
+
+
+ // ==== Fly-back field group===
+  @UI.lineItem: [{ position: 10}]
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 10 }]
+  AirportFromId;
+
+  @UI.lineItem: [{ position: 20}]
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 20 }]
+  AirportToId;
+
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 30 }]
+  DepartureTime;
+
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 40 }]
+  ArrivalTime;
+
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 50 }]
+  Price;
+
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 60 }]
+  AvaiableSeats;
+
+  @UI.fieldGroup: [{ qualifier: 'FlyBackGroup', position: 70 }]
+  PercentageOfOccupiedSeats;
+
+  @UI.hidden: true
+  StatusCriticality;
+
+}

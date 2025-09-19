@@ -1,0 +1,5 @@
+CLASS zpl_flight_booking DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_plfb_flight_booking.
+ENDCLASS.
+
+CLASS zpl_flight_booking IMPLEMENTATION.
+ENDCLASS.

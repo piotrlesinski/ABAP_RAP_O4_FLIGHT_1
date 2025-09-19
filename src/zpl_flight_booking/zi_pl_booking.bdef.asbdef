@@ -1,0 +1,50 @@
+//managed implementation in class zbp_i_pl_booking unique;
+managed;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_PL_BOOKING alias Booking
+implementation in class ZPL_FL_BOOKING unique
+persistent table zpl_aflbooking
+draft table zpl_dflbooking
+//lock master
+//authorization master ( instance )
+etag master LocalLastChangedAt
+lock master total etag LastChangedAt
+authorization master ( global )
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  //field ( readonly ) BookingUuid;
+  field ( numbering : managed ) BookingUuid;
+
+  draft action Edit;
+  draft action Activate;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zpl_aflbooking
+    {
+        BookingUUID = BOOKING_UUID;
+        CarrierID = CARRIER_ID;
+        ConnectionID = CONNECTION_ID;
+        BeginDate = BEGIN_DATE;
+        EndDate = END_DATE;
+        Price = PRICE;
+        CurrencyCode = CURRENCY_CODE;
+        OverallStatus = OVERALL_STATUS;
+        CreatedBy = CREATED_BY;
+        CreatedAt = CREATED_AT;
+        LastChangedBy = LAST_CHANGED_BY;
+        LastChangedAt = LAST_CHANGED_AT;
+        LocalLastChangedAt = LOCAL_LAST_CHANGED_AT;
+    }
+
+  //association _Booking { create; with draft; }
+
+  determination CalculateBookingID on save { create; }
+
+}

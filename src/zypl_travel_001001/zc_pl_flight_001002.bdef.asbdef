@@ -1,0 +1,21 @@
+projection;
+strict ( 2 );
+//use draft;
+define behavior for ZC_PL_FLIGHT_001002 alias Flight
+use etag
+{
+//  use association _Booking { create; with draft; }
+  use association _Booking;
+  use action bookFlight;
+}
+
+define behavior for ZC_PL_BOOK_001002 alias Booking
+use etag
+
+{
+  //use update;
+  //use delete;
+
+//  use association _Flight { with draft; }
+  use association _Flight;
+}
