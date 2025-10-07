@@ -97,13 +97,14 @@ annotate entity ZC_PL_FLIGHT_001002 with
     label: 'Carrier',
     quickInfo: 'Carrier'
   }
-  //@UI.textArrangement: #TEXT_ONLY
+//  @UI.textArrangement: #TEXT_ONLY
   CarrierId;
 
   @UI: {
-    lineItem: [{ position: 100, label: 'Create Booking', type: #FOR_ACTION, dataAction: 'createBooking', importance: #HIGH }],
-  //    identification: [{ position: 10, label: 'Connection ID' }]
+    lineItem: [{ position: 100, label: 'Create Booking', type: #FOR_ACTION, dataAction: 'bookFlight', importance: #HIGH }],
+  //    identification: [{ position: 10, label: 'Connection ID' }] }
     identification: [ { position: 10, type: #FOR_ACTION, dataAction: 'bookFlight',label: 'Book Flight', importance: #HIGH }]}
+  //identification: [ { position: 10, label: 'Connection ID' }]}
   @EndUserText: {
     label: 'Connection ID',
     quickInfo: 'Connection ID'
@@ -170,6 +171,16 @@ annotate entity ZC_PL_FLIGHT_001002 with
     quickInfo: 'Price'
   }
   FlightPrice;
+  
+  @UI: {
+    identification: [{ position: 50 }],
+    fieldGroup: [{ qualifier: 'DetailsInfo', position: 60 }]
+  }
+  @EndUserText: {
+    label: 'Total Price',
+    quickInfo: 'Total Price'
+  }
+  TravelTotalPrice;
 
   @UI: {
     lineItem: [{ position: 70, label: 'Available Seats', importance: #HIGH, criticality: 'StatusCriticality' }]
@@ -205,6 +216,9 @@ annotate entity ZC_PL_FLIGHT_001002 with
   }
   @EndUserText.label: 'Occupancy %'
   PercentageOfOccupiedSeats;
+  
+  @UI.fieldGroup: [{ qualifier: 'StatusInfo', position: 20 }] 
+  SeatsOccupied; 
 
   @UI.hidden: true
   StatusCriticality;

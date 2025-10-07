@@ -1,22 +1,8 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Flights View for Flight Booking'
 
 define root view entity ZI_PL_FLIGHT_001001
   as select from zpl_aflig_001001 as Flight
-
-  //      inner join   /dmo/connection  as _Conn        on  Flight.connection_id = _Conn.connection_id
-  //                                                    and Flight.carrier_id    = _Conn.carrier_id
-  //      inner join   /dmo/airport     as _AirportFrom on _AirportFrom.airport_id = _Conn.airport_from_id
-  //      inner join   /dmo/airport     as _AirportTo   on _AirportTo.airport_id = _Conn.airport_to_id
-  //
-  //      inner join   /dmo/carrier     as _Carrier     on  Flight.carrier_id    = _Carrier.carrier_id
-
-  //      inner join   /dmo/travel      as _Travel      on Flight.flight_uuid = _Travel.flight_uuid
-
-
-  //composition [0..*] of ZI_PL_BOOK_001001 as _Booking
-
-
 
 {
   key Flight.flight_uuid           as FlightUuid,
@@ -66,11 +52,6 @@ define root view entity ZI_PL_FLIGHT_001001
       //      _Travel.description          as Description,
       //      _Travel.status               as Status,
 
-
-
-
-
-      //_Booking
 }
 where
   Flight.flight_date >= $session.system_date

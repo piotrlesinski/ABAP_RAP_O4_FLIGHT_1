@@ -2,44 +2,91 @@
 
 @UI.presentationVariant: [{
     sortOrder: [
-      { by: 'BookingDate', direction: #ASC }
+      { by: 'BookingDate', direction: #DESC }
       //{ by: 'BookingId', direction: #ASC }
     ],
     visualizations: [{ type: #AS_LINEITEM }]
   }]
-  
+
+
+
 annotate entity ZC_PL_BOOK_001002 with
 {
-  @UI: { lineItem:       [{ position: 10 }],
-     identification: [{ position: 10 }] }
+
+  @UI.facet: [
+    {
+      purpose: #HEADER,
+      position: 10,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'BookingData'
+    },
+    //~~~~~~ object page sections ~~~~~~
+  //   {
+  //    id: 'FlightDetails',
+  //    type: #COLLECTION,
+  //    label: 'Booking Details',
+  //    position: 10
+  //  }
+   {
+      id:             'GeneralInfo',
+      label:          'General Information',
+      purpose:        #STANDARD,
+      position:       10 ,
+      type:           #IDENTIFICATION_REFERENCE 
+    }
+  ]
+
+
+  @UI.hidden: true
   BookingUuid;
+  @UI.hidden: true
+  FlightUuid;
+  @UI.hidden: true
+  TravelUuid;
+  @UI: { lineItem:       [{ position: 10 }],
+  //       identification: [{ position: 10 }],
+         dataPoint: { qualifier: 'BookingData', title: 'Booking ID' }, 
+         identification: [ { position: 10, type: #FOR_ACTION, dataAction: 'bookFlight',label: 'Book Flight', importance: #HIGH }]
+   }
+  @EndUserText: { label:     'Booking Id',
+                  quickInfo: 'Booking Id' }
+  BookingId;
   @UI: { lineItem:       [{ position: 20 }],
          identification: [{ position: 20 }] }
-  FlightUuid;
-  @UI: { lineItem:       [{ position: 30 }],
+  @EndUserText: { label:     'Booking Date',
+                  quickInfo: 'Booking Date' }
+  BookingDate;
+  @UI: { //lineItem:       [{ position: 30 }],
          identification: [{ position: 30 }] }
-  TravelUuid;
+  @EndUserText: { label:     'Customer Id',
+                  quickInfo: 'Customer Id' }
+  CustomerId;
+  
   @UI: { lineItem:       [{ position: 40 }],
          identification: [{ position: 40 }] }
-  BookingId;
+  @EndUserText: { label:     'Carrier',
+                  quickInfo: 'Carrier' }
+  CarrierId;
   @UI: { lineItem:       [{ position: 50 }],
          identification: [{ position: 50 }] }
-  BookingDate;
+  @EndUserText: { label:     'Connection Id',
+                  quickInfo: 'Connection Id' }
+  ConnectionId;
   @UI: { lineItem:       [{ position: 60 }],
          identification: [{ position: 60 }] }
-  CustomerId;
+  @EndUserText: { label:     'Start Date',
+                  quickInfo: 'Start Date' }
+  StartDate;
   @UI: { lineItem:       [{ position: 70 }],
          identification: [{ position: 70 }] }
-  CarrierId;
+  @EndUserText: { label:     'Price',
+                  quickInfo: 'Price' }
+  FlightPrice;
   @UI: { lineItem:       [{ position: 80 }],
          identification: [{ position: 80 }] }
-  ConnectionId;
-  @UI: { lineItem:       [{ position: 90 }],
-         identification: [{ position: 90 }] }
-  StartDate;
-  @UI: { lineItem:       [{ position: 100 }],
-         identification: [{ position: 100 }] }
-  FlightPrice;
+  @EndUserText: { label:     'Approval Note',
+                  quickInfo: 'Approval Note' }
+  ApprovalNote;
 
 
 }

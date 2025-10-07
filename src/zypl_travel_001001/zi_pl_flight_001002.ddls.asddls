@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Custom Logic for Flight Booking'
 @Metadata.ignorePropagatedAnnotations: true
 @ObjectModel.usageType:{
@@ -9,12 +9,16 @@
 define view entity ZI_PL_FLIGHT_001002
   as select from ZI_PL_FLIGHT_001001
 
-  association [1..1] to ZI_PL_CONN_001001    as _Conn        on  $projection.ConnectionId = _Conn.ConnectionId
-                                                             and $projection.CarrierId    = _Conn.CarrierId
-  association [1..1] to ZI_PL_AIRPORT_001001 as _AirportTo   on  $projection.ConnAirportToId = _AirportTo.AirportId
-  association [1..1] to ZI_PL_AIRPORT_001001 as _AirportFrom on  $projection.ConnAirportFromId = _AirportFrom.AirportId
+  association [1..1] to ZI_PL_CONN_001001    as _Conn         on  $projection.ConnectionId = _Conn.ConnectionId
+                                                              and $projection.CarrierId    = _Conn.CarrierId
+  association [1..1] to ZI_PL_AIRPORT_001001 as _AirportTo    on  $projection.ConnAirportToId = _AirportTo.AirportId
+  association [1..1] to ZI_PL_AIRPORT_001001 as _AirportFrom  on  $projection.ConnAirportFromId = _AirportFrom.AirportId
 
+  association [1..1] to zpl_curr_convert     as _RateLatest   on  $projection.CurrencyCode = _RateLatest.currency
+                                                              and _RateLatest.valid_to     = '99991231'
 
+  association [1..1] to zpl_curr_convert     as _RateEarliest on  $projection.CurrencyCode = _RateEarliest.currency
+                                                              and _RateEarliest.valid_to   = '20250601'
 {
   key FlightUuid,
       CarrierId,
@@ -64,5 +68,7 @@ define view entity ZI_PL_FLIGHT_001002
       LastChangedAt,
       _Conn,
       _AirportTo,
-      _AirportFrom
+      _AirportFrom,
+      _RateLatest,
+      _RateEarliest
 }

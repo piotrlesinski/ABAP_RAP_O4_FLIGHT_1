@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Projection View for Flight'
 @Metadata.allowExtensions: true
 @ObjectModel.semanticKey: [ 'ConnectionId' ]
@@ -10,8 +10,10 @@ define root view entity ZC_PL_FLIGHT_001002
       //@ObjectModel.text.association: '_Carrier'
   key FlightUuid,
       @Consumption.valueHelpDefinition: [ {
-             entity: { name: 'ZI_PL_VH_CARR_001001', element: 'CarrierId' }
+             //entity: { name: 'ZI_PL_VH_CARR_001001', element: 'CarrierId' }
+             entity: { name: 'ZI_PL_CARR_001001', element: 'CarrierId' }
            } ]
+      @ObjectModel.text.element: ['CarrierName']     
       CarrierId,
       ConnectionId,
       @Consumption.filter: {  selectionType: #INTERVAL,  multipleSelections: false  }
@@ -61,12 +63,18 @@ define root view entity ZC_PL_FLIGHT_001002
       @ObjectModel.text.element: ['Distance']
       DistanceUnit,
       CarrierName,
+      StatusCriticality,
+            
+      @Semantics.amount.currencyCode : 'TravelCurrencyCode'
+      TravelTotalPrice,        
+      TravelCurrencyCode,
+      
       LocalCreatedBy,
       LocalCreatedAt,
       LocalLastChangedBy,
       LocalLastChangedAt,
       LastChangedAt,
-      StatusCriticality,
+
       /* Associations */
       //_Booking,
       _AirportFrom,
