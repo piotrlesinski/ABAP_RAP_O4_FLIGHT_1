@@ -130,6 +130,23 @@ CLASS zpl_data_generator_001001 IMPLEMENTATION.
 
     out->write( 'Booking TB Done!' ).
 
+
+    " Seed rates to USD
+    DELETE FROM zpl_curr_convert.
+
+    DATA lt_fx TYPE STANDARD TABLE OF zpl_curr_convert.
+    lt_fx = VALUE #(
+      ( client   = sy-mandt  currency = 'SGD'  valid_to = '20250601'  rate = '1.33' )
+      ( client   = sy-mandt  currency = 'SGD'  valid_to = '99991231'  rate = '0.77' )
+      ( client   = sy-mandt  currency = 'EUR'  valid_to = '99991231'  rate = '0.98' )
+      ( client   = sy-mandt  currency = 'JPY'  valid_to = '99991231'  rate = '0.50' )
+      ( client   = sy-mandt  currency = 'USD'  valid_to = '99991231'  rate = '1.00' )
+    ).
+
+    INSERT zpl_curr_convert FROM TABLE @lt_fx.
+    out->write( 'Rate to USD TB Done!' ).
+
+
   ENDMETHOD.
 
 ENDCLASS.
