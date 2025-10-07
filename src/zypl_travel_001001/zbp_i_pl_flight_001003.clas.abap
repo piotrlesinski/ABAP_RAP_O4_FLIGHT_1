@@ -1,15 +1,5 @@
-class ZBP_I_PL_FLIGHT_001003 definition
-  public
-  abstract
-  final
-  create public .
-
-public section.
-protected section.
-private section.
+CLASS zbp_i_pl_flight_001003 DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_pl_flight_001003.
 ENDCLASS.
 
-
-
-CLASS ZBP_I_PL_FLIGHT_001003 IMPLEMENTATION.
+CLASS zbp_i_pl_flight_001003 IMPLEMENTATION.
 ENDCLASS.

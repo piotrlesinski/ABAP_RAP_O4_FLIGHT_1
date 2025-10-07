@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Avaialbe Seats VH for Flight Booking'
 @ObjectModel : { resultSet.sizeCategory: #XS }
 define view entity ZI_PL_VH_FULL_BOOK as select distinct from ZI_PL_FLIGHT_001003

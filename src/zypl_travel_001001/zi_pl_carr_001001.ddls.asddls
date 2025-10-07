@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Carrier View for Flight Booking'
 @ObjectModel.usageType:{
     serviceQuality: #X,

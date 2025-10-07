@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Airport VH for Flight Booking'
 @ObjectModel.usageType:{
     serviceQuality: #X,

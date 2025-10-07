@@ -5,14 +5,15 @@
 @EndUserText.label: 'CDS View for Travels'
 @Metadata.ignorePropagatedAnnotations: true
 define view ZI_PLFB_TRAVEL
-  as select from /dmo/travel as Travel
+  as select from zpl_atrav_001001 as Travel
 
- // association [0..1] to /dmo/connection as _Connection on $projection.carrierid = _Connection.carrier_id
- // association [0..1] to /dmo/airport    as _Airport    on $projection.planetypeid = _Airport.airport_id
- // association [0..1] to /dmo/carrier    as _Carrier    on $projection.carrierid = _Carrier.carrier_id
- // association [0..1] to /dmo/flight     as _Flight     on $projection.carrierid = _Flight.carrier_id
+  // association [0..1] to /dmo/connection as _Connection on $projection.carrierid = _Connection.carrier_id
+  // association [0..1] to /dmo/airport    as _Airport    on $projection.planetypeid = _Airport.airport_id
+  // association [0..1] to /dmo/carrier    as _Carrier    on $projection.carrierid = _Carrier.carrier_id
+  // association [0..1] to /dmo/flight     as _Flight     on $projection.carrierid = _Flight.carrier_id
 
 {
+  key travel_uuid   as TravelUuid,
   key travel_id     as TravelId,
       agency_id     as AgencyId,
       customer_id   as CustomerId,
@@ -27,8 +28,8 @@ define view ZI_PLFB_TRAVEL
       createdat     as Createdat,
       lastchangedby as Lastchangedby,
       lastchangedat as Lastchangedat
-  //    _Connection,
-  //    _Airport,
-  //    _Carrier,
-  //    _Flight
+      //    _Connection,
+      //    _Airport,
+      //    _Carrier,
+      //    _Flight
 }

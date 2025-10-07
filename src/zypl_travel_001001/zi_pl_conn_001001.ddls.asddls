@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Connection View for Flight Booking'
 define view entity ZI_PL_CONN_001001
   as select from zpl_conn_001001

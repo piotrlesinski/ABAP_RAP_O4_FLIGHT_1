@@ -1,4 +1,4 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Consumption View for FlyBack Fights'
 @Metadata.allowExtensions: true
 define view entity ZC_PL_FLYBACK_001001

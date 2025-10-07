@@ -1,5 +1,13 @@
-CLASS zpl_flight_booking DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_plfb_flight_booking.
+class ZPL_FLIGHT_BOOKING definition
+  public
+  create private .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zpl_flight_booking IMPLEMENTATION.
+
+
+CLASS ZPL_FLIGHT_BOOKING IMPLEMENTATION.
 ENDCLASS.

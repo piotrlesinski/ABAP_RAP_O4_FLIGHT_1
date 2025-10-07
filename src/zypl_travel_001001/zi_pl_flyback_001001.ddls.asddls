@@ -1,4 +1,3 @@
-@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Flyback for Flight view'
 @ObjectModel.usageType:{
