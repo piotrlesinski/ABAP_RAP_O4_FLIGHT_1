@@ -1,31 +1,117 @@
 managed;
 strict ( 2 );
+with draft;
 
 define behavior for ZI_PL_FLIGHT_001003 alias Flight
-  implementation in class zbp_i_pl_flight_001003 unique
-persistent table ZPL_AFLIG_001001
-
-authorization master( none )
+implementation in class ZBP_I_PL_FLIGHT_001003 unique
+persistent table zpl_aflig_001001
+draft table zpl_dflig_001001
+authorization master ( instance )
 etag master LastChangedAt
 lock master
+total etag LastChangedAt
+
 {
 
-  association _Booking;
+  field ( numbering : managed, readonly ) FlightUuid;
 
-  action bookFlight result [0..1] $self;
+  field ( readonly )
+  CarrierId, ConnectionId, FlightDate,
+  FlightPrice, CurrencyCode,
+  PlaneTypeId, SeatsMax, SeatsOccupied;
+
+  //  create;
+  update;
+  delete;
+
+  draft action Activate;
+  draft action Edit;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  //  association _Booking { create; }
+  association _Booking { create; with draft; }
+
+  //  action bookFlight result [0..1] $self;
+  action bookFlight result [1] $self;
+  //  action bookFlight result [1] ZI_PL_BOOK_001001;
+
+  //  determination calculateSeatsOccupied on save { create; }
+  //  determination calculateSeatsOccupied on save { field SeatsOccupied; }
+
+
+  mapping for zpl_aflig_001001
+    {
+      FlightUuid         = flight_uuid;
+      CarrierId          = carrier_id;
+      ConnectionId       = connection_id;
+      FlightDate         = flight_date;
+      FlightPrice        = price;
+      CurrencyCode       = currency_code;
+      TravelTotalPrice   = travel_total_price;
+      TravelCurrencyCode = travel_currency_code;
+      PlaneTypeId        = plane_type_id;
+      SeatsMax           = seats_max;
+      SeatsOccupied      = seats_occupied;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
 }
 
-define behavior for ZI_PL_BOOK_001001 alias Booking
-implementation in class ZBP_I_PL_Booking_001001 unique
-persistent table ZPL_ABOOK_001001
-etag master LocalLastChangedAt
+define behavior for ZI_PL_BOOK_001002 alias Booking
+implementation in class ZBP_I_PL_BOOKING_001001 unique
+persistent table zpl_abook_001001
+draft table zpl_dbook_001001
+etag master LastChangedAt
 lock dependent by _Flight
 authorization dependent by _Flight
 
 {
+
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) BookingUuid;
+
   field ( readonly )
-  BookingUuid, CarrierId, ConnectionId, FlightUuid, BookingDate, StartDate;
+  BookingId, CarrierId, FlightUuid, BookingDate, StartDate, ConnectionId, FlightPrice, CurrencyCode;
 
-  association _Flight;
+  //  association _Flight;
+  association _Flight { with draft; }
+  //  action bookFlight result [0..1] $self;
 
+
+  determination setInitDataFromFlight on modify { create; }
+  determination CalculateBookingId on modify { create; }
+  determination UpdateSeatsOnCreate on save { create; }
+
+  validation ValidateSeats on save { create; }
+
+
+  mapping for zpl_abook_001001
+    {
+      BookingUuid        = booking_uuid;
+      FlightUuid         = flight_uuid;
+      TravelUuid         = travel_uuid;
+      BookingId          = booking_id;
+      BookingDate        = booking_date;
+      CustomerId         = customer_id;
+      CarrierId          = carrier_id;
+      ConnectionId       = connection_id;
+      StartDate          = flight_date;
+      FlightPrice        = flight_price;
+      CurrencyCode       = currency_code;
+      TravelTotalPrice   = travel_total_price;
+      TravelCurrencyCode = travel_currency_code;
+      ApprovalNote       = approval_note;
+      CreatedBy          = created_by;
+      CreatedAt          = created_at;
+      LastChangedBy      = last_changed_by;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
 }

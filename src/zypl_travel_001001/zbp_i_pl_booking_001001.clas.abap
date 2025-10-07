@@ -1,0 +1,18 @@
+CLASS zbp_i_pl_booking_001001 DEFINITION
+  PUBLIC
+  FINAL
+*  FOR BEHAVIOR OF zi_pl_booking_001001. //NOT ROOT
+ FOR BEHAVIOR OF zi_pl_flight_001003.
+
+    PRIVATE SECTION.
+
+
+ENDCLASS.
+
+
+
+CLASS zbp_i_pl_booking_001001 IMPLEMENTATION.
+
+
+ENDCLASS.
+
