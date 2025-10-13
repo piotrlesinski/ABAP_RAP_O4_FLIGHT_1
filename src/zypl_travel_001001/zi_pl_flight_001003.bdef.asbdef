@@ -80,6 +80,8 @@ authorization dependent by _Flight
   field ( readonly )
   BookingId, CarrierId, FlightUuid, BookingDate, StartDate, ConnectionId, FlightPrice, CurrencyCode;
 
+//  field ( mandatory : create ) ApprovalNote;
+
   //  association _Flight;
   association _Flight { with draft; }
   //  action bookFlight result [0..1] $self;
@@ -90,7 +92,10 @@ authorization dependent by _Flight
   determination UpdateSeatsOnCreate on save { create; }
 
   validation ValidateSeats on save { create; }
+  validation ValidatePrice on save { create;
+                                     field TravelTotalPrice, ApprovalNote; }
 
+//TODO: validation CustomerID mandatory on save { create; }
 
   mapping for zpl_abook_001001
     {

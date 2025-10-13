@@ -15,7 +15,6 @@ define view entity ZC_PL_BOOK_001002
            entity: { name: '/DMO/I_Customer', element: 'CustomerID' }
          } ]
         CustomerId,
-        //CustomerIdDisp,
         CarrierId,
         ConnectionId,
         StartDate,
